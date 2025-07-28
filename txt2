@@ -1,0 +1,16 @@
+package main
+
+import "fmt"
+
+func aVeryBigSum(ar []int64) int64 {
+	sum := int64(0)
+	for _, num := range ar {
+		sum += num
+	}
+	return sum
+}
+func main() {
+	ar := []int64{1001, 2002, 2003}
+	result := aVeryBigSum(ar)
+	fmt.Println(result)
+}

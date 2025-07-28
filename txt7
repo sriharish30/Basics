@@ -1,0 +1,32 @@
+package main
+
+import "fmt"
+
+func hourglass(a [][]int32) int32 {
+	maxSum := int32(-63)
+	for i := 0; i <= 3; i++ {
+		for j := 0; j <= 3; j++ {
+			currentSum := a[i][j] + a[i][j+1] + a[i][j+2] +
+				a[i+1][j+1] +
+				a[i+2][j] + a[i+2][j+1] + a[i+2][j+2]
+			if currentSum > maxSum {
+				maxSum = currentSum
+			}
+
+		}
+
+	}
+	return maxSum
+}
+func main() {
+	a := [][]int32{
+		{1, 9, 8, 0, 0, 0},
+		{0, 1, 0, 0, 0, 0},
+		{1, 1, 1, 0, 0, 0},
+		{0, 0, 2, 4, 4, 0},
+		{0, 0, 0, 9, 0, 0},
+		{0, 0, 1, 2, 4, 0},
+	}
+	result := hourglass(a)
+	fmt.Println(result)
+}

@@ -1,0 +1,17 @@
+package main
+
+import "fmt"
+
+func array(a []int32) []int32 {
+	reverse := make([]int32, len(a))
+	for i := 0; i < len(a); i++ {
+		reverse[i] = a[len(a)-1-i]
+
+	}
+	return reverse
+}
+func main() {
+	a := [4]int32{1, 2, 3, 4}
+	result := array(a[:])
+	fmt.Println(result)
+}

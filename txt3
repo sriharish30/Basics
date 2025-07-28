@@ -1,0 +1,77 @@
+package main
+
+import (
+	"errors"
+	"fmt"
+	"os"
+	"strconv"
+)
+
+func writeBalanceTofiles(balance float64) {
+	balanceTxt := fmt.Sprint(balance)
+	os.WriteFile("balance.txt", []byte(balanceTxt), 0644)
+
+}
+func getBalancefromFile() (float64, error) {
+	data, err := os.ReadFile("balance.txt")
+	if err != nil {
+		return 1000, errors.New("Failed to read file")
+	}
+	balanceText := string(data)
+	balance, err := strconv.ParseFloat(balanceText, 64)
+	if err != nil {
+		return 1000, errors.New("Failed to parse stored balance value")
+	}
+	return balance, nil
+}
+
+func main() {
+	var accbal, err = getBalancefromFile()
+	if err != nil {
+		fmt.Println("Error")
+		fmt.Println(err)
+		fmt.Println("--------------")
+	}
+	for {
+		fmt.Println("welcome to our bank")
+		fmt.Println("what do u want ?")
+		fmt.Println("account balance ")
+		fmt.Println("deposit")
+		fmt.Println("withdraw")
+		fmt.Println("exit")
+		var choice int
+		fmt.Print("enter you choice :")
+		fmt.Scan(&choice)
+		if choice == 1 {
+			fmt.Println("Your acc bal is :", accbal)
+		} else if choice == 2 {
+			var deposit float64
+			fmt.Print("Enter deposit amt: ")
+			fmt.Scan(&deposit)
+			if deposit <= 0 {
+				fmt.Println("dont deposit the amt below o  OR 0")
+				return
+			}
+			accbal = accbal + deposit
+			writeBalanceTofiles(accbal)
+			fmt.Println("your account balance is :", accbal)
+
+		} else if choice == 3 {
+			var withdraw float64
+			fmt.Print("Enter withdraw amt: ")
+			fmt.Scan(&withdraw)
+			if withdraw > accbal {
+				fmt.Println("with draw amt is greater than your acc balance")
+				return
+			}
+			accbal = accbal - withdraw
+			writeBalanceTofiles(accbal)
+			fmt.Println("your account balance is :", accbal)
+		} else {
+			fmt.Println("exit !!!!!!!")
+			break
+		}
+
+	}
+	fmt.Println("thank you byeee byeeeeeeeee!!!!!!!!!!!")
+}

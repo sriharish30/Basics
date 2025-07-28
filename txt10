@@ -1,0 +1,28 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func main() {
+	str := []string{"flower", "fast"}
+	result := longestPrefix(str)
+	fmt.Println(result)
+
+}
+
+func longestPrefix(str []string) string {
+	if len(str) == 1 {
+		return str[0]
+
+	}
+	sort.Strings(str)
+	l := len(str)
+	for i := range str[0] {
+		if str[0][i] != str[l-1][i] {
+			return str[0][:i]
+		}
+	}
+	return str[0]
+}

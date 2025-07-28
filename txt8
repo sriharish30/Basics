@@ -1,0 +1,106 @@
+package main
+
+import "fmt"
+
+type Student struct {
+	Name   string
+	Grades []float64
+}
+
+func main() {
+	var students []Student
+
+	for {
+		fmt.Println("\nSimple Grade Management")
+		fmt.Println("1. Add Student")
+		fmt.Println("2. Add Grade")
+		fmt.Println("3. View students Grades")
+		fmt.Println("4. Exit")
+		fmt.Print("Choose an option: ")
+
+		var choice int
+		fmt.Scanln(&choice)
+
+		switch choice {
+		case 1:
+			students = addStudent(students)
+		case 2:
+			students = addGrade(students)
+		case 3:
+			viewStudents(students)
+		case 4:
+			fmt.Println("Goodbye!")
+			return
+		default:
+			fmt.Println("Invalid choice")
+		}
+	}
+}
+
+func addStudent(students []Student) []Student {
+	var name string
+	fmt.Print("Enter student name: ")
+	fmt.Scanln(&name)
+
+	newStudent := Student{
+		Name:   name,
+		Grades: []float64{},
+	}
+
+	return append(students, newStudent)
+}
+
+func addGrade(students []Student) []Student {
+	if len(students) == 0 {
+		fmt.Println("No students available")
+		return students
+	}
+
+	fmt.Println("Select a student:")
+	for i, s := range students {
+		fmt.Printf("%d. %s\n", i+1, s.Name)
+	}
+
+	var studentNum int
+	fmt.Print("Enter student number: ")
+	fmt.Scanln(&studentNum)
+
+	if studentNum < 1 || studentNum > len(students) {
+		fmt.Println("Invalid student number")
+		return students
+	}
+
+	var grade float64
+	fmt.Print("Enter grade (0-100): ")
+	fmt.Scanln(&grade)
+
+	if grade < 0 || grade > 100 {
+		fmt.Println("Grade must be between 0 and 100")
+		return students
+	}
+
+	students[studentNum-1].Grades = append(students[studentNum-1].Grades, grade)
+	fmt.Println("Grade added!")
+	return students
+}
+
+func viewStudents(students []Student) {
+	if len(students) == 0 {
+		fmt.Println("No students to display")
+		return
+	}
+
+	fmt.Println("\nStudent Grades:")
+	for _, s := range students {
+		fmt.Printf("\n%s: ", s.Name)
+		if len(s.Grades) == 0 {
+			fmt.Print("No grades yet")
+			continue
+		}
+
+		// Print grades
+		for _, g := range s.Grades {
+			fmt.Printf("%.0f ", g)
+		}
+	}
+}

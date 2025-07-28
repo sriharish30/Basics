@@ -1,0 +1,22 @@
+package main
+
+import "fmt"
+
+func main() {
+	var revenue float64
+	fmt.Print("Revenue: ")
+	fmt.Scan(&revenue)
+	var expenses float64
+	fmt.Print("Expenses: ")
+	fmt.Scan(&expenses)
+	var taxrate float64
+	fmt.Print("Tax Rate: ")
+	fmt.Scan(&taxrate)
+	ebt := revenue - expenses
+	profit := ebt * (1 - taxrate/100)
+	ratio := ebt / profit
+	fmt.Println(ebt)
+	fmt.Println(profit)
+	fmt.Println(ratio)
+
+}
